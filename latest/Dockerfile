@@ -1,25 +1,17 @@
-FROM       python:latest
+FROM       alpine:latest
 MAINTAINER Carlos Avila "cavila@mandelbrew.com"
 
 # Prep env
-ENV        DEBIAN_FRONTEND        noninteractive
 ENV        PYTHONUNBUFFERED       1
 ENV        PRE_RESOURCES_HOOK     ''
 ENV        RESOURCES_URL          ''
 ENV        POST_RESOURCES_HOOK    ''
 
 # Operating System
-RUN        apt-get update -y \
-           && apt-get install -y \
-             postgresql \
-             awscli \
-             curl \
-             rsyslog \
-             cron \
-           && apt-get autoremove -y \
-           && apt-get clean -y \
-           && rm -rf /var/lib/apt/lists/* \
-           && rm -rf /usr/share/man/*
+RUN        apk update \
+           && apk add --no-cache --virtual .fetch-deps \
+               curl \
+           && apk del .fetch-deps
 
 # Application
 WORKDIR	   /opt/docker
