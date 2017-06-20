@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 set -e
 
 # Prep env
 IFS=$(echo -en "\n\b")
-CRONTAB=/etc/crontab
+CRONTAB=/etc/crontabs/root
 TASK_PREFIX='CRON_TASK_'
 
 if [ -z $(printenv | grep ${TASK_PREFIX}) ]; then
@@ -29,9 +29,6 @@ if [ ! -z ${POST_RESOURCES_HOOK} ]; then
     eval ${POST_RESOURCES_HOOK};
 fi
 
-# Make env var available for cron jobs
-printenv | grep -v "no_proxy" >>/etc/environment
-
 # Parse custom tasks
 echo "# Custom tasks" >>${CRONTAB}
 for task in $(printenv | grep 'CRON_TASK_'| cut -d= -f2); do
@@ -40,8 +37,4 @@ done
 echo "# An empty line is required at the end of this file for a valid cron file." >>${CRONTAB}
 
 # Start service
-service rsyslog start
-service cron start
-
-# Docker log
-tail -f /var/log/syslog
+crond -f -l 0
