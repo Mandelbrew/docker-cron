@@ -3,11 +3,13 @@ MAINTAINER Carlos Avila "cavila@mandelbrew.com"
 
 # Prep env
 ENV        PYTHONUNBUFFERED       1
-ENV        RESOURCES_URL      ''
+ENV        PRE_RESOURCES_HOOK     ''
+ENV        RESOURCES_URL          ''
+ENV        POST_RESOURCES_HOOK    ''
 
 # Operating System
 RUN        apk update \
-           && apk add postgresql wget \
+           && apk add postgresql curl \
            && pip3 install --no-cache-dir --upgrade pip setuptools wheel \
            && pip3 install --no-cache-dir awscli
 

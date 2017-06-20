@@ -12,10 +12,21 @@ if [ -z $(printenv | grep ${TASK_PREFIX}) ]; then
     exit 1
 fi
 
+# Pre resources hook
+if [ ! -z ${PRE_RESOURCES_HOOK} ]; then
+    eval ${PRE_RESOURCES_HOOK};
+fi
+
 # Download helper sources
 if [ ! -z ${RESOURCES_URL} ]; then
     echo "Downloading resources from ${RESOURCES_URL}"
-    wget ${RESOURCES_URL}
+    curl -L --insecure ${RESOURCES_URL} > resources.tar.gz
+    tar -zxvf resources.tar.gz
+fi
+
+# Post resources hook
+if [ ! -z ${POST_RESOURCES_HOOK} ]; then
+    eval ${POST_RESOURCES_HOOK};
 fi
 
 # Make env var available for cron jobs
