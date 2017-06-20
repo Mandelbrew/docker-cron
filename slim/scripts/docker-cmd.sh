@@ -1,10 +1,10 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
 # Prep env
 IFS=$(echo -en "\n\b")
-CRONTAB=/etc/crontabs/root
+CRONTAB=/etc/crontab
 TASK_PREFIX='CRON_TASK_'
 
 if [ -z $(printenv | grep ${TASK_PREFIX}) ]; then
@@ -40,4 +40,6 @@ done
 echo "# An empty line is required at the end of this file for a valid cron file." >>${CRONTAB}
 
 # Start service
-crond -f -l 0
+touch /var/log/cron.log
+service cron start
+tail -f /var/log/cron.log
