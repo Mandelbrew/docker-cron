@@ -1,4 +1,4 @@
-FROM       python:slim
+FROM       python:latest
 MAINTAINER Carlos Avila "cavila@mandelbrew.com"
 
 # Prep env
