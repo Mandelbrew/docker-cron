@@ -9,12 +9,11 @@ ENV        POST_RESOURCES_HOOK    ''
 
 # Operating System
 RUN        apk update \
-           && apk add --no-cache --virtual .fetch-deps \
-               curl \
-           && apk del .fetch-deps
+           && apk add --no-cache \
+               curl
 
 # Application
-WORKDIR	   /opt/docker
+WORKDIR	   /root
 
 ADD        scripts/docker-cmd.sh docker-cmd.sh
 RUN        chmod +x docker-cmd.sh

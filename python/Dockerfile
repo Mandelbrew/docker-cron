@@ -9,13 +9,12 @@ ENV        POST_RESOURCES_HOOK    ''
 
 # Operating System
 RUN        apk update \
-           && apk add --no-cache --virtual .fetch-deps \
+           && apk add --no-cache \
                curl \
-           && pip3 install --no-cache-dir --upgrade pip setuptools wheel \
-           && apk del .fetch-deps
+           && pip3 install --no-cache-dir --upgrade pip setuptools wheel
 
 # Application
-WORKDIR	   /opt/docker
+WORKDIR	   /root
 
 ADD        scripts/docker-cmd.sh docker-cmd.sh
 RUN        chmod +x docker-cmd.sh
