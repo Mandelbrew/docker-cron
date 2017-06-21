@@ -1,4 +1,4 @@
-FROM       python:alpine
+FROM       alpine:latest
 MAINTAINER Carlos Avila "cavila@mandelbrew.com"
 
 # Prep env
@@ -9,12 +9,11 @@ ENV        POST_RESOURCES_HOOK    ''
 
 # Operating System
 RUN        apk update \
-           && apk add postgresql curl \
-           && pip3 install --no-cache-dir --upgrade pip setuptools wheel \
-           && pip3 install --no-cache-dir awscli
+           && apk add --no-cache \
+               curl
 
 # Application
-WORKDIR	   /opt/docker
+WORKDIR	   /root
 
 ADD        scripts/docker-cmd.sh docker-cmd.sh
 RUN        chmod +x docker-cmd.sh

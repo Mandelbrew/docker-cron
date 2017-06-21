@@ -29,9 +29,6 @@ if [ ! -z ${POST_RESOURCES_HOOK} ]; then
     eval ${POST_RESOURCES_HOOK};
 fi
 
-# Make env var available for cron jobs
-printenv | grep -v "no_proxy" >>/etc/environment
-
 # Parse custom tasks
 echo "# Custom tasks" >>${CRONTAB}
 for task in $(printenv | grep 'CRON_TASK_'| cut -d= -f2); do
