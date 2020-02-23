@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-set -e
+set -exf
 
 # Prep env
 IFS=$(echo -en "\n\b")
@@ -31,7 +31,7 @@ fi
 
 # Parse custom tasks
 echo "# Custom tasks" >>${CRONTAB}
-for task in $(printenv | grep 'CRON_TASK_'| cut -d= -f2); do
+for task in $(printenv | grep "${TASK_PREFIX}" | cut -d= -f2); do
     echo ${task} >>${CRONTAB}
 done
 echo "# An empty line is required at the end of this file for a valid cron file." >>${CRONTAB}

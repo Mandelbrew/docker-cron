@@ -10,6 +10,7 @@ ENV        POST_RESOURCES_HOOK    ''
 # Operating System
 RUN        apk update \
            && apk add --no-cache \
+               cron \
                curl
 
 # Application
